@@ -66,7 +66,7 @@ module.exports = {
           
           this.log.info("exited with code", child.status);
           if (child.stderr) {
-            this.log.info(child.stderr);
+            this.log.info(child.stderr.toString());
           }
         }
         

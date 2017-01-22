@@ -52,7 +52,7 @@ module.exports = {
 
           var cwd = cwd || process.cwd();
 
-          childProcess.spawnSync("java", [
+          var child = childProcess.spawnSync("java", [
               '-Dplantuml.include.path=' + cwd,
               '-Djava.awt.headless=true',
               '-jar', PLANTUML_JAR, outputFormat,
@@ -63,6 +63,11 @@ module.exports = {
               stdio: ['pipe', fs.openSync(imagePath, 'w'), 'pipe'],
               input: umlText
             });
+          
+          this.log.info("exited with code", child.status);
+          if (child.stderr) {
+            this.log.info(child.stderr);
+          }
         }
         
         this.log.debug("copying plantUML from tempDir for ", imageName);
